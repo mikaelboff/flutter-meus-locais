@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -26,8 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   List<String> locais = [
     "Beira",
     "São Miguel do Oeste",
@@ -43,9 +43,16 @@ class _MyHomePageState extends State<MyHomePage> {
     "São José do Cedro",
     "Washington"
   ];
-  void _incrementCounter() {
+
+  List<MaterialColor> cores = Colors.primaries;
+
+  String randomTexto = "";
+  MaterialColor randomCor = Colors.blue;
+
+  void _atualizarTela() {
     setState(() {
-      _counter++;
+      randomTexto = locais[new Random().nextInt(locais.length)];
+      randomCor = cores[new Random().nextInt(cores.length)];
     });
   }
 
@@ -60,7 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
+          children: <Widget>[
+            FlatButton(
+              onPressed: () {
+                _atualizarTela();
+              },
+              color: randomCor,
+              textColor: Colors.white,
+              child: Text('Clique!'),
+            ),
+            new Text('$randomTexto',
+                style: Theme.of(context).textTheme.display1)
+          ],
         ),
       ),
     );
